@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Helvetica', 'Arial', sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+      text-align: center;
+      padding: 20px 0;
+      background-color: #00D180;
+      color: white;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+    .header img {
+      width: 40%;
+      height: 40%;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .content {
+      padding: 20px;
+      color: #333333;
+    }
+    .summary {
+      background-color: #EBEDF1; /* Light gray */
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    .summary p {
+      margin: 0;
+      font-size: 16px;
+    }
+    .summary .label {
+      font-weight: bold;
+      color: #002C30; /* Dark blue */
+    }
+    .footer {
+      text-align: center;
+      padding: 10px 0;
+      color: #6c757d;
+      font-size: 14px;
+    }
+    .footer a {
+      color: #f05438; /* Orange */
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="cid:logo.png" alt="Logo">
+      <h1>Account Summary</h1>
+    </div>
+    <div class="content">
+      <p>Dear customer,</p>
+      <p>Here is your account summary:</p>
+      <div class="summary">
+        <p><span class="label">Account Number:</span>[account_number]</p><br>
+        <p><span class="label">Total Balance:</span> $[total_balance]</p><br>
+        [month_transactions]
+        <p><span class="label">Average Debit Amount:</span> [average_debit_amount]</p><br>
+        <p><span class="label">Average Credit Amount:</span> [average_credit_amount]</p><br>
+        <p><span class="label">Top Debit Transactions:</span> [top_debit_transactions]</p><br>
+        <p><span class="label">Top Credit Transactions:</span> [top_credit_transactions]</p><br>
+      </div>
+      <p>If you have any questions, please don't hesitate to <a href="mailto:danielespitiacorredor@gmail.com">contact us</a>.</p>
+    </div>
+    <div class="footer">
+      <p>&copy; 2024 UserTransactions. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>
