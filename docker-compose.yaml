@@ -1,0 +1,35 @@
+networks:
+  txnetwork:
+      name: txnetwork.localhost
+services:
+  transactions-api:
+    build: .
+    image: go-user-transactions:latest
+    container_name: go-user-tx
+    env_file:
+      - .env
+    networks:
+      default:
+      txnetwork:
+    volumes:
+      - .:/opt/app
+    ports:
+      - "8080:8080"
+  mongo-db:
+    image: mongo:4.4.0
+    container_name: tx-mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_DATABASE=transactionsdb
+    networks:
+      default:
+      txnetwork:
+    ports:
+      - "27018:27017"
+    volumes:
+      - ./bin/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    healthcheck: # re-run rs.initiate() after startup if it failed.
+      test: test $$(echo "db.runCommand({serverStatus:1}).ok" | mongo mongodb://root:root@localhost:27017/admin?authSource=admin --quiet) -eq 1
+      interval: 10s
+      start_period: 30s
