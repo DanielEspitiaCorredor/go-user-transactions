@@ -56,6 +56,11 @@ make generate-report EMAIL=<example@example.com>
 In the `EMAIL` param, set the email that receive the report 
 
 
+When execute the script, you receive an email with the balance of your account.
+
+![alt text](/assets/readme/report.png)
+
+
 # Generate data
 
 To generate a new file with test data, please download the python version and continue with the instructions [docs](https://github.com/DanielEspitiaCorredor/user-transactions?tab=readme-ov-file#generate-data) 
