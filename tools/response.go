@@ -13,6 +13,7 @@ type GinResponseType int32
 const (
 	GinResponseTypes_UNKNOWN GinResponseType = iota
 	GinResponseTypes_JSON
+	GinResponseTypes_NOCONTENT
 )
 
 func SendResponse(ctx *gin.Context, statusCode int, data any, headers map[string]string, ginRespType GinResponseType) (err error) {
@@ -32,6 +33,9 @@ func SendResponse(ctx *gin.Context, statusCode int, data any, headers map[string
 
 		ctx.JSON(statusCode, data)
 
+	case GinResponseTypes_NOCONTENT:
+
+		ctx.Status(statusCode)
 	default:
 
 		err = errors.New("invalid gin response type")

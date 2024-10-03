@@ -1,6 +1,7 @@
 package transactionv1
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -27,6 +28,13 @@ func GenerateReport(ctx *gin.Context) {
 		return
 	}
 
+	if isValidEmail := tools.ValidateEmail(request.GetReceiverEmail()); !isValidEmail {
+		fmt.Println(msg, "Invalid receiver email", request.GetReceiverEmail())
+		tools.SendError(ctx, nil, errors.New("invalid params"), http.StatusBadRequest, "no valid receiver_email")
+		return
+
+	}
+
 	msg = fmt.Sprintf("%s[Account:%s][Year:%d]", msg, request.GetAccount(), request.GetYear())
 
 	fmt.Println(msg)
@@ -43,9 +51,9 @@ func GenerateReport(ctx *gin.Context) {
 	// Pre Process file data
 	txDf.PreProcessData()
 	// Get account balance
-	// balance := txDf.NewAccountBalance()
-	// balance.SendReport()
+	balance := txDf.NewAccountBalance()
+	balance.SendReport(request.GetReceiverEmail())
 
-	tools.SendResponse(ctx, http.StatusOK, nil, nil, tools.GinResponseTypes_JSON)
+	tools.SendResponse(ctx, http.StatusNoContent, nil, nil, tools.GinResponseTypes_JSON)
 
 }

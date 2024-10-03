@@ -5,6 +5,8 @@ import (
 
 	"github.com/go-gota/gota/dataframe"
 	"github.com/go-gota/gota/series"
+
+	"github.com/DanielEspitiaCorredor/go-user-transactions/tools"
 )
 
 type DataframeOperation int
@@ -70,4 +72,10 @@ func ApplyDf(df *dataframe.DataFrame, columnName string, operation DataframeOper
 		*df = df.Mutate(series.New(values, series.Float, columnName))
 	}
 
+}
+
+func GetTop(df *dataframe.DataFrame, num int) *dataframe.DataFrame {
+
+	topDf := df.Subset(tools.MakeRange(0, num))
+	return &topDf
 }
