@@ -5,10 +5,13 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/go-gota/gota/dataframe"
 	"github.com/go-gota/gota/series"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 
+	"github.com/DanielEspitiaCorredor/go-user-transactions/internal/odm"
 	"github.com/DanielEspitiaCorredor/go-user-transactions/tools/dataframeops"
 )
 
@@ -90,6 +93,36 @@ func (t *TransactionDataframe) NewAccountBalance() *AccountBalance {
 		DebitTx:        t.getTransactionData(TransactionType_DEBIT),  // Get debit data
 		CreditTx:       t.getTransactionData(TransactionType_CREDIT), // Get credit data
 	}
+}
+
+func (t *TransactionDataframe) InsertData() error {
+
+	for _, v := range t.df.Maps() {
+
+		id, _ := v["id"].(int)
+		dateStr, _ := v["date"].(string)
+		name, _ := v["name"].(string)
+		value, _ := v["value"].(float64)
+
+		dateStr = fmt.Sprintf("%d/%s", t.year, dateStr)
+		date, _ := time.Parse("2006/01/02", dateStr)
+
+		dbTx := odm.Transaction{
+			Id:    int(id),
+			Date:  primitive.NewDateTimeFromTime(date),
+			Name:  name,
+			Value: value,
+		}
+
+		err := dbTx.Insert()
+
+		if err != nil {
+			fmt.Println("[TransactionDataframe][InsertData] error when insert data", err)
+			return err
+		}
+	}
+
+	return nil
 }
 
 func (t *TransactionDataframe) getTransactionData(txType TransactionType) (txData *TransactionData) {

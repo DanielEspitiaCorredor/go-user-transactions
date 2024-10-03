@@ -48,6 +48,14 @@ func GenerateReport(ctx *gin.Context) {
 		return
 	}
 
+	// Insert data to mongo
+	if err := txDf.InsertData(); err != nil {
+
+		fmt.Println(msg, "[InsertData] error", err)
+		tools.SendError(ctx, nil, err, http.StatusFailedDependency, "error processing data")
+		return
+	}
+
 	// Pre Process file data
 	txDf.PreProcessData()
 	// Get account balance

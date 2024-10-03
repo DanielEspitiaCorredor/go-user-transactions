@@ -148,8 +148,6 @@ func (a *AccountBalance) GetTopTransactionStr(txType TransactionType, topNum int
 
 	for _, v := range topDf.Maps() {
 
-		fmt.Println("v", v)
-
 		txName, _ := v["name"].(string)
 		txTotal, _ := v["total"].(float64)
 		if topTxStr == "" {
