@@ -1,9 +1,11 @@
 package transactionv1
 
+import "github.com/go-gota/gota/dataframe"
+
 type ExtractRequest struct {
-	Account       string `json:"account,required"`
-	Year          int    `json:"year,required"`
-	ReceiverEmail string `json:"receiver_email,required"`
+	Account       string `json:"account" binding:"required"`
+	Year          int    `json:"year" binding:"required"`
+	ReceiverEmail string `json:"receiver_email" binding:"required"`
 }
 
 // GetAccount returns the Account field
@@ -28,4 +30,25 @@ func (e *ExtractRequest) GetReceiverEmail() string {
 		return ""
 	}
 	return e.ReceiverEmail
+}
+
+type TransactionData struct {
+	AverageTxValue  float64
+	TopTransactions *dataframe.DataFrame
+}
+
+// GetAverageTxValue returns the average transaction value
+func (t *TransactionData) GetAverageTxValue() float64 {
+	if t == nil {
+		return 0.0
+	}
+	return t.AverageTxValue
+}
+
+// GetTopTransactions returns the dataframe with top transactions field
+func (t *TransactionData) GetTopTransactions() *dataframe.DataFrame {
+	if t == nil {
+		return nil
+	}
+	return t.TopTransactions
 }

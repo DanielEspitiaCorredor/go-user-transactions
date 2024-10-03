@@ -16,7 +16,7 @@ func setupRouter() *gin.Engine {
 	// General router configuration
 	r := gin.Default()
 	r.Use(middleware.CORSMiddleware())
-	r.Use(middleware.ValidateApiKey("GO_EVENT_MANAGER_API_KEY"))
+	r.Use(middleware.ValidateApiKey("SERVICE_API_KEY"))
 
 	// Router map
 	svcRouters := &gin.RouterGroup{}
